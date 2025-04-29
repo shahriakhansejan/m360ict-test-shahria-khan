@@ -5,3 +5,15 @@
 .activeNav a.active {
   text-decoration: underline;
 }
+
+
+
+/* product table */
+.productTable .ant-table-container {
+  background-color: #f3f3f3;
+  overflow-x: scroll;
+}
+
+.productTable thead > tr > th {
+  background-color: #0ea5e9 !important;
+}

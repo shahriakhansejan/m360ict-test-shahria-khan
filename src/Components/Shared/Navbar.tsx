@@ -15,8 +15,8 @@ const Navbar: React.FC = () => {
     </>
   );
   return (
-    <div className="bg-base-300">
-      <div className="navbar shadow-sm max-w-7xl mx-auto">
+    <div className="bg-sky-500">
+      <div className="navbar max-w-7xl mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

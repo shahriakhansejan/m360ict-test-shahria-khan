@@ -1,10 +1,12 @@
 import React from 'react';
+import Banner from '../Components/HomeElement/Banner/Banner';
+import About from '../Components/HomeElement/About/About';
 
 const Home: React.FC = () => {
     return (
         <div>
-            <h2 className='text-3xl font-bold text-red-500'>This is Home </h2>
-            
+            <Banner/>
+            <About/>
         </div>
     );
 };

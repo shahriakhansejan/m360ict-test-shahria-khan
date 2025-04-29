@@ -4,7 +4,7 @@ import { FaFacebook, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 const Footer: React.FC = () => {
   return (
-    <div className="bg-base-200">
+    <div className="bg-sky-950">
       <footer className="footer sm:footer-horizontal max-w-7xl mx-auto text-neutral-content p-10">
         <aside>
           <img className="w-16 rounded-full" src={logo} alt="" />

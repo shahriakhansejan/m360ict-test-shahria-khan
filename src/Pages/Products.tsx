@@ -1,97 +1,89 @@
-// import React from 'react';
-// import { useGetProductsQuery } from '../redux/feature/products/productsApi';
+import React, { useState } from "react";
+import { useGetProductsQuery } from "../redux/feature/products/productsApi";
+import { Table, Space } from "antd";
+import { Link } from "react-router";
+import { FaRegEye } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 
-// const Products: React.FC = () => {
-//     const { data: products } = useGetProductsQuery({ limit: 10, skip: 10 });
+const { Column } = Table;
 
-//     console.log(products?.products)
-//     return (
-//         <div>
-//             <h2 className='text-3xl font-semibold'>this is product : {products?.products?.length}</h2>
-//         </div>
-//     );
-// };
+const Products: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const skip = (page - 1) * pageSize;
 
-// export default Products;
-import React from 'react';
-import { Space, Table, Tag } from 'antd';
+  const { data: productsData, isLoading } = useGetProductsQuery({
+    limit: pageSize,
+    skip,
+  });
 
-const { Column, ColumnGroup } = Table;
+  if (isLoading) {
+    return <progress className="progress w-full"></progress>;
+  }
 
-interface DataType {
-  key: React.Key;
-  firstName: string;
-  lastName: string;
-  age: number;
-  address: string;
-  tags: string[];
-}
-
-const data: DataType[] = [
-  {
-    key: '1',
-    firstName: 'John',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
-const Products: React.FC = () => (
-  <Table<DataType> dataSource={data}>
-    <ColumnGroup title="Name">
-      <Column title="First Name" dataIndex="firstName" key="firstName" />
-    </ColumnGroup>
-    <Column title="Age" dataIndex="age" key="age" />
-    <Column title="Address" dataIndex="address" key="address" />
-    <Column
-      title="Tags"
-      dataIndex="tags"
-      key="tags"
-      render={(tags: string[]) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      )}
-    />
-    <Column
-      title="Action"
-      key="action"
-      render={(_: any, record: DataType) => (
-        <Space size="middle">
-          <a>Invite {record.lastName}</a>
-          <a>Delete</a>
-        </Space>
-      )}
-    />
-  </Table>
-);
+  return (
+    <div className="p-5 my-6">
+      <Table
+        dataSource={productsData?.products}
+        rowKey="id"
+        bordered
+        className="productTable"
+        pagination={{
+          current: page,
+          pageSize,
+          total: productsData?.total,
+          showSizeChanger: true,
+          pageSizeOptions: ["5", "10", "20"],
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize);
+          },
+        }}
+      >
+        <Column title="Id" dataIndex="id" key="id" />
+        <Column
+          title="Image"
+          dataIndex="thumbnail"
+          key="thumbnail"
+          render={(thumbnail: string) => (
+            <img
+              src={thumbnail}
+              alt="Product"
+              style={{
+                width: 50,
+                height: 50,
+                objectFit: "cover",
+                borderRadius: "50%",
+              }}
+            />
+          )}
+        />
+        <Column title="Title" dataIndex="title" key="title" />
+        <Column
+          title="Price"
+          dataIndex="price"
+          key="price"
+          render={(price: number) => `$${price}`}
+        />
+        <Column title="Category" dataIndex="category" key="category" />
+        <Column title="Stock" dataIndex="stock" key="stock" />
+        <Column
+          title="Action"
+          key="action"
+          render={(_, record) => (
+            <Space size="middle">
+              <Link to={`/products/${record.id}`}>
+                <FaRegEye className="text-xl" />
+              </Link>
+              <Link to={`/product/edit/${record.id}`}>
+                <FaEdit className="text-xl" />
+              </Link>
+            </Space>
+          )}
+        />
+      </Table>
+    </div>
+  );
+};
 
 export default Products;

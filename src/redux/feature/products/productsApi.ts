@@ -1,3 +1,4 @@
+import { ProductFormValues } from "../../../interfaces/product.interface";
 import baseApi from "../api/baseApi";
 
 // type
@@ -54,13 +55,36 @@ interface Products {
   limit: number;
 }
 
+interface Category {
+  slug: string;
+  name: string;
+  url: string;
+}
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query<Products, { limit: number; skip: number }>({
       query: ({ limit, skip }) => `/products?limit=${limit}&skip=${skip}`,
     }),
+    getSingleProduct: builder.query<ProductFormValues, number>({
+      query: (id) => `/products/${id}`,
+    }),
+    getCategory: builder.query<Category[], void>({
+      query: () => "/products/categories",
+    }),
+    updateProduct: builder.mutation({
+      query: ({ id, ...values }) => ({
+        url: `/products/${id}`,
+        method: "PATCH",
+        body: values,
+      }),
+    }),
   }),
 });
 
-export const { useGetProductsQuery } = productsApi;
+export const {
+  useGetProductsQuery,
+  useGetSingleProductQuery,
+  useGetCategoryQuery,
+  useUpdateProductMutation,
+} = productsApi;

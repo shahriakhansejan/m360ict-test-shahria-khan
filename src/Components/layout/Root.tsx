@@ -7,7 +7,9 @@ const Root: React.FC = () => {
     return (
         <div>
             <Navbar/>
+            <div className='max-w-7xl mx-auto min-h-screen'>
             <Outlet/>
+            </div>
             <Footer/>
         </div>
     );
