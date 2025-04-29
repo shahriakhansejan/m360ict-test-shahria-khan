@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
           <img className="w-12 rounded-full" src={logo} alt="logo" />
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="activeNav flex flex-row items-center gap-5 font-semibold">{navMenu}</ul>
+          <ul className="activeNav flex text-white flex-row items-center gap-5 font-semibold">{navMenu}</ul>
         </div>
         <div className="navbar-end">
           <a className="btn">Button</a>
