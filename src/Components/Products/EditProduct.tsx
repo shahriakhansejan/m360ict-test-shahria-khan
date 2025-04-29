@@ -17,6 +17,8 @@ import {
   useUpdateProductMutation,
 } from "../../redux/feature/products/productsApi";
 import ReviewForm from "../review/ReviewForm";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+
 
 const { Option } = Select;
 
@@ -73,11 +75,11 @@ const EditProduct: React.FC = () => {
     <div className="p-4">
       <div className="flex justify-between mb-6 gap-4">
         <h3 className="font-bold text-sky-500 text-2xl">Edit Product</h3>
-        <form method="dialog">
-          <button className="btn btn-error btn-outline btn-sm text-xl">
-            X
+       
+          <button onClick={()=> navigate(-1)} className="btn btn-ghost btn-outline btn-sm text-xl">
+          <MdOutlineKeyboardBackspace />
           </button>
-        </form>
+       
       </div>
 
       <Form
